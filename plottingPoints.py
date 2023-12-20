@@ -58,39 +58,47 @@ def manipulatablePolar(n):
     return (((r * np.cos(angle))+radius), (r * np.sin(angle)+radius))
 
 
-# Graph selection
-print('Which method would you like to use?\n1: Rejection sampling\n2: Basic Polar method\n3: Uniform Polar\n4: Manipulatable Polar')
-option = int(input())
-if option == 4:
-    n = float(input("Which distribution would you like to use? 1 being concentrated to the center and higher numbers being concentrated farther from the center: "))
-else:
-    n = None
-points = int(input("How many points would you like? Preferably over 3141:"))
-modes = {1: rejectionSampling,
-         2: basicPolar,
-         3: manipulatedPolar,
-         4: manipulatablePolar
-         }
-if option in modes:
-    startTime = time.time()
-    for i in range(points):
-        x, y = modes[option](n)
-        xPlot.append(x)
-        yPlot.append(y)
-    endTime = time.time()
-    print("Time Elapsed: ", (endTime - startTime))
-else:
-    print("Invalid Option")
-    exit()
-# Plotting points as a scatter plot
-plt.scatter(xPlot, yPlot, color="red", marker=".", s=5)
-# x-axis label
-plt.xlabel('x axis')
-# frequency label
-plt.ylabel('y axis')
-# plot title
-plt.title('Circle')
-# showing legend
-plt.legend()
-# function to show the plot
-plt.show()
+def main():
+    # Graph selection
+    print('Which method would you like to use?\n1: Rejection sampling\n2: Basic Polar method\n3: Uniform Polar\n4: Manipulatable Polar')
+    option = int(input())
+    if option == 4:
+        n = float(input("Which distribution would you like to use? 1 being concentrated to the center and higher numbers being concentrated farther from the center: "))
+    else:
+        n = None
+    points = int(
+        input("How many points would you like? Preferably over 3141:"))
+    modes = {
+        1: rejectionSampling,
+        2: basicPolar,
+        3: manipulatedPolar,
+        4: manipulatablePolar
+    }
+    if option in modes:
+        method = modes[option]
+        startTime = time.time()
+        for _ in range(points):
+            x, y = method(n)
+            xPlot.append(x)
+            yPlot.append(y)
+        endTime = time.time()
+        print("Time Elapsed: ", (endTime - startTime))
+    else:
+        print("Invalid Option")
+        exit()
+    # Plotting points as a scatter plot
+    plt.scatter(xPlot, yPlot, color="red", marker=".", s=5)
+    # x-axis label
+    plt.xlabel('x axis')
+    # frequency label
+    plt.ylabel('y axis')
+    # plot title
+    plt.title('Circle')
+    # showing legend
+    plt.legend()
+    # function to show the plot
+    plt.show()
+
+
+if __name__ == "__main__":
+    main()
