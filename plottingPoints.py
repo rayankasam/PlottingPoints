@@ -59,39 +59,43 @@ def manipulatablePolar(n):
 
 
 def main():
-    # Graph selection
-    print('Which method would you like to use?\n1: Rejection sampling\n2: Basic Polar method\n3: Uniform Polar\n4: Manipulatable Polar')
-    option = int(input())
-    if option == 4:
-        n = float(input("Which distribution would you like to use? 1 being concentrated to the center and higher numbers being concentrated farther from the center: "))
-    else:
-        n = None
-    points = int(
-        input("How many points would you like? Preferably over 3141:"))
+    # Input -> Mode map
     modes = {
         1: rejectionSampling,
         2: basicPolar,
         3: manipulatedPolar,
         4: manipulatablePolar
     }
-    if option in modes:
-        method = modes[option]
-        startTime = time.time()
-        for _ in range(points):
-            x, y = method(n)
-            xPlot.append(x)
-            yPlot.append(y)
-        endTime = time.time()
-        print("Time Elapsed: ", (endTime - startTime))
-    else:
+    # Graph selection
+    print('Which method would you like to use?\n1: Rejection sampling\n2: Basic Polar method\n3: Uniform Polar\n4: Manipulatable Polar')
+    option = int(input())
+    if option not in modes:
         print("Invalid Option")
         exit()
+    if option == 4:
+        n = float(input("Which distribution would you like to use? 1 being concentrated to the center and higher numbers being concentrated farther from the center: "))
+    else:
+        n = None
+
+    numPoints = int(
+        input("How many points would you like? Preferably over 3141:"))
+
+    method = modes[option]
+
+    startTime = time.time()
+    for _ in range(numPoints):
+        x, y = method(n)
+        xPlot.append(x)
+        yPlot.append(y)
+    endTime = time.time()
+
+    print("Time Elapsed: ", (endTime - startTime))
     # Plotting points as a scatter plot
     plt.scatter(xPlot, yPlot, color="red", marker=".", s=5)
     # x-axis label
-    plt.xlabel('x axis')
+    plt.xlabel('x_axis')
     # frequency label
-    plt.ylabel('y axis')
+    plt.ylabel('y_axis')
     # plot title
     plt.title('Circle')
     # showing legend
